@@ -1,0 +1,14 @@
+package co.zsmb.cleannotes.domain.base
+
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+
+abstract class UseCase<T, in P>(val scheduler: Scheduler) {
+
+    protected abstract fun createObservable(params: P): Observable<T>
+
+    fun execute(params: P): Observable<T>
+            = createObservable(params)
+            .subscribeOn(scheduler)
+
+}

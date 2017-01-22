@@ -1,0 +1,74 @@
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+ext {
+
+    support_version = '25.1.0'
+
+    kotlin_version = '1.0.6'
+    anko_version = '0.9'
+
+    rxjava_version = '2.0.4'
+    rxandroid_version = '2.0.1'
+    rxkotlin_version = '0.60.0'
+
+    dagger_version = '2.8'
+    javax_version = '1'
+
+    retrofit_version = '2.1.0'
+
+    junit_version = '4.12'
+
+    mockitoCore_version = '2.6.3'
+    mockitoKotlin_version = '1.1.0'
+
+    presentationDependencies = [
+            appcompat     : "com.android.support:appcompat-v7:$support_version",
+            recyclerview  : "com.android.support:recyclerview-v7:$support_version",
+            design        : "com.android.support:design:$support_version",
+
+            kotlin        : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            anko          : "org.jetbrains.anko:anko-sdk15:$anko_version",
+            ankoAppCompat : "org.jetbrains.anko:anko-appcompat-v7:$anko_version",
+
+            rxJava        : "io.reactivex.rxjava2:rxjava:$rxjava_version",
+            rxAndroid     : "io.reactivex.rxjava2:rxandroid:$rxandroid_version",
+            rxKotlin      : "io.reactivex:rxkotlin:$rxkotlin_version",
+
+            dagger        : "com.google.dagger:dagger:$dagger_version",
+            daggerCompiler: "com.google.dagger:dagger-compiler:$dagger_version",
+
+            junit         : "junit:junit:$junit_version",
+
+            mockitoCore   : "org.mockito:mockito-core:$mockitoCore_version",
+            mockitoKotlin : "com.nhaarman:mockito-kotlin:$mockitoKotlin_version",
+    ]
+
+    domainDependencies = [
+            kotlin     : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+
+            rxJava     : "io.reactivex.rxjava2:rxjava:$rxjava_version",
+            rxKotlin   : "io.reactivex:rxkotlin:$rxkotlin_version",
+
+            javaxInject: "javax.inject:javax.inject:$javax_version"
+    ]
+
+    dataDependencies = [
+            kotlin       : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+
+            rxJava       : "io.reactivex.rxjava2:rxjava:$rxjava_version",
+            rxKotlin     : "io.reactivex:rxkotlin:$rxkotlin_version",
+
+            javaxInject  : "javax.inject:javax.inject:$javax_version",
+
+            junit        : "junit:junit:$junit_version",
+
+            mockitoCore  : "org.mockito:mockito-core:$mockitoCore_version",
+            mockitoKotlin: "com.nhaarman:mockito-kotlin:$mockitoKotlin_version",
+    ]
+
+}

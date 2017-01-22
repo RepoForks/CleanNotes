@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'realm-android'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+
+        test {
+            java.srcDirs = ['src/test/kotlin']
+        }
+        androidTest {
+            java.srcDirs = ['src/androidTest/kotlin']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+
+buildscript {
+    ext.kotlin_version = '1.0.6'
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.realm:realm-gradle-plugin:2.2.2"
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    def dependencies = rootProject.ext.dataDependencies
+
+    /* Defaults */
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    /* Modules */
+    compile project(path: ':domain')
+
+    /* Kotlin */
+    compile dependencies.kotlin
+
+    /* RxJava */
+    compile dependencies.rxJava
+    compile dependencies.rxKotlin
+
+    /* DI */
+    compile dependencies.javaxInject
+
+    /* Tests */
+    testCompile dependencies.junit
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    /* Mockito */
+    testCompile dependencies.mockitoCore
+    testCompile dependencies.mockitoKotlin
+}

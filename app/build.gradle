@@ -1,0 +1,83 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "co.zsmb.cleannotes"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+
+        test {
+            java.srcDirs = ['src/test/kotlin']
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+
+    def dependencies = rootProject.ext.presentationDependencies
+
+    /* Defaults */
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    /* Modules */
+    compile project(path: ':domain')
+    compile project(path: ':data')
+
+    /* Android libs */
+    compile dependencies.appcompat
+    compile dependencies.recyclerview
+    compile dependencies.design
+
+    /* Kotlin */
+    compile dependencies.kotlin
+    compile dependencies.anko
+    compile dependencies.ankoAppCompat
+
+    /* Rx */
+    compile dependencies.rxJava
+    compile dependencies.rxAndroid
+    compile dependencies.rxKotlin
+
+    /* Dagger */
+    compile dependencies.dagger
+    kapt dependencies.daggerCompiler
+
+    /* Tests */
+    testCompile dependencies.junit
+
+    /* Android Tests */
+    /*androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })*/
+
+    /* Mockito */
+    testCompile dependencies.mockitoCore
+    testCompile dependencies.mockitoKotlin
+
+}
