@@ -8,6 +8,6 @@ interface NotesPresenter : Presenter<NotesView> {
 
     fun openNote(note: PresentableNote)
 
-    fun addTestNotes()
+    fun createNote()
 
 }

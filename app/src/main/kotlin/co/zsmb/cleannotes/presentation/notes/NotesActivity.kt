@@ -36,7 +36,7 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
 
         setupRecyclerView(savedInstanceState)
 
-        fab.onClick { presenter.addTestNotes() }
+        fab.onClick { presenter.createNote() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
