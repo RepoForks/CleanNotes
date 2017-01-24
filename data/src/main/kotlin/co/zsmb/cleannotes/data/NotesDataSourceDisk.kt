@@ -2,58 +2,60 @@ package co.zsmb.cleannotes.data
 
 import io.reactivex.Observable
 import io.realm.Realm
-import javax.inject.Inject
 
-class NotesDataSourceDisk @Inject constructor(private val realm: Realm)
-    : NotesDataSource {
+class NotesDataSourceDisk : NotesDataSource {
 
     override fun getAll(): Observable<List<RealmNote>> {
-        val notes = realm.where(RealmNote::class.java).findAll().map {
-            realm.copyFromRealm(it)
+        val notes = withRealm {
+            where(RealmNote::class.java).findAll().map { copyFromRealm(it) }
         }
         return Observable.just(notes)
     }
 
     override fun get(id: Int): Observable<RealmNote> {
-        val note = realm.where(RealmNote::class.java).equalTo("id", id).findFirst()
+        val note = withRealm {
+            val managedNote = where(RealmNote::class.java).equalTo("id", id).findFirst()
+
+            if (managedNote == null) null else copyFromRealm(managedNote)
+        }
 
         if (note == null) {
             return Observable.error(RuntimeException("No note exists with id $id"))
         }
         else {
-            return Observable.just(realm.copyFromRealm(note))
+            return Observable.just(note)
         }
     }
 
     override fun add(note: RealmNote): Observable<Int> {
-        realm.executeTransaction {
-            note.giveId(it)
-            it.insert(note)
+        withRealmTransaction {
+            note.giveId(this)
+            insert(note)
         }
         return Observable.just(note.id)
     }
 
     override fun addAll(notes: List<RealmNote>): Observable<Int> {
         // TODO check for failure somehow
-        realm.executeTransaction {
-            notes.giveIds(it)
-            it.insert(notes)
+        withRealmTransaction {
+            notes.giveIds(this)
+            insert(notes)
         }
         return Observable.just(notes.size)
     }
 
     override fun update(note: RealmNote): Observable<Int> {
         // TODO check for failure somehow
-        realm.executeTransaction {
-            it.insertOrUpdate(note)
+        withRealmTransaction {
+            insertOrUpdate(note)
         }
         return Observable.just(1)
     }
 
     override fun updateAll(notes: List<RealmNote>): Observable<Int> {
         // TODO check for failure somehow
-        realm.executeTransaction {
-            it.insertOrUpdate(notes)
+        withRealmTransaction {
+            insertOrUpdate(notes)
         }
         return Observable.just(notes.size)
     }
@@ -72,6 +74,32 @@ class NotesDataSourceDisk @Inject constructor(private val realm: Realm)
         forEach {
             it.id = generatedId++
         }
+    }
+
+    private inline fun <T> withRealm(operation: Realm.() -> T): T {
+        val realm = Realm.getDefaultInstance()
+        realm.use { return it.operation() }
+    }
+
+    private inline fun <T> withRealmTransaction(operation: Realm.() -> T): T {
+        var result: T? = null
+        var exception: Exception? = null
+
+        val realm = Realm.getDefaultInstance()
+
+        realm.beginTransaction()
+        try {
+            result = realm.operation()
+            realm.commitTransaction()
+        } catch(e: Exception) {
+            exception = e
+            realm.cancelTransaction()
+        } finally {
+            realm.close()
+            exception?.let { throw it }
+        }
+
+        return result as T
     }
 
 }

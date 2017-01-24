@@ -18,12 +18,9 @@ class NotesDataModule {
             = NotesRepositoryImpl(notesDataSourceDisk)
 
     @Provides @Singleton
-    fun provideNotesDataSource(realm: Realm): NotesDataSource = NotesDataSourceDisk(realm)
-
-    @Provides @Singleton
-    fun provideRealm(context: Context): Realm {
+    fun provideNotesDataSource(context: Context): NotesDataSource {
         Realm.init(context)
-        return Realm.getDefaultInstance()
+        return NotesDataSourceDisk()
     }
 
 }
