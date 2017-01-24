@@ -18,4 +18,5 @@ var RecyclerView.scrollPosition: Int
         }
     }
 
-fun ViewGroup.inflate(@IdRes layout: Int): View = LayoutInflater.from(this.context).inflate(layout, this, false)
+fun ViewGroup.inflate(@IdRes layout: Int): View
+        = LayoutInflater.from(this.context).inflate(layout, this, false)

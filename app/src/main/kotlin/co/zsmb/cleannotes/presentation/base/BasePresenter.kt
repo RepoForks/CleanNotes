@@ -2,8 +2,7 @@ package co.zsmb.cleannotes.presentation.base
 
 import io.reactivex.disposables.Disposable
 
-abstract class BasePresenter<V : Any>
-    : Presenter<V> {
+abstract class BasePresenter<V : Any> : Presenter<V> {
 
     protected var view: V? = null
 
@@ -22,7 +21,7 @@ abstract class BasePresenter<V : Any>
         subscriptions.clear()
     }
 
-    override fun onTerminate() {
+    final override fun onTerminate() {
         cancelSubscriptions()
         unbind()
     }

@@ -9,9 +9,9 @@ import io.reactivex.Scheduler
 import javax.inject.Inject
 
 class NoteDetailsPresenterImpl @Inject constructor(
-        val navigator: Navigator,
-        val getNoteUseCase: GetNoteUseCase,
-        val mainScheduler: Scheduler)
+        private val navigator: Navigator,
+        private val getNoteUseCase: GetNoteUseCase,
+        private val mainScheduler: Scheduler)
     : BasePresenter<NoteDetailsView>(), NoteDetailsPresenter {
 
     override fun editNote(noteId: Int) {
@@ -19,7 +19,7 @@ class NoteDetailsPresenterImpl @Inject constructor(
     }
 
     companion object {
-        val TAG = "NDPresenterImpl"
+        private val TAG = "NDPresenterImpl"
     }
 
     private fun showNote(note: DetailedNote) {

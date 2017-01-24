@@ -8,7 +8,7 @@ import io.reactivex.Scheduler
 import javax.inject.Inject
 
 class GetNoteUseCase @Inject constructor(
-        val notesRepository: NotesRepository,
+        private val notesRepository: NotesRepository,
         scheduler: Scheduler)
     : UseCase<DomainNote, Int>(scheduler) {
 

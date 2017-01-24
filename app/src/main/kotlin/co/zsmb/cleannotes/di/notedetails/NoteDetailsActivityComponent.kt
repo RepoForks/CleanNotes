@@ -12,10 +12,5 @@ import dagger.Component
         modules = arrayOf(
                 NoteDetailsPresentationModule::class,
                 NoteDetailsDomainModule::class
-        )
-)
-interface NoteDetailsActivityComponent : ActivityComponent<NoteDetailsPresenter> {
-
-    //fun makeNoteDetailsPresenter(): NoteDetailsPresenter
-
-}
+        ))
+interface NoteDetailsActivityComponent : ActivityComponent<NoteDetailsPresenter>

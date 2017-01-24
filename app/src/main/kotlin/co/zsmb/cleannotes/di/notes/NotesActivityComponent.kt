@@ -13,8 +13,4 @@ import dagger.Component
                 NotesPresentationModule::class,
                 NotesDomainModule::class
         ))
-interface NotesActivityComponent : ActivityComponent<NotesPresenter> {
-
-    //fun makeNotesPresenter(): NotesPresenter
-
-}
+interface NotesActivityComponent : ActivityComponent<NotesPresenter>

@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_note_details.*
 
 class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityComponent>(), NoteDetailsView {
 
-    var noteId: Int = 0
+    private var noteId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

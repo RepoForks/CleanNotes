@@ -14,14 +14,11 @@ import kotlinx.android.synthetic.main.activity_notes.*
 import org.jetbrains.anko.onClick
 import org.jetbrains.anko.toast
 
-class NotesActivity
-    : BaseView<NotesPresenter, NotesActivityComponent>(),
-        NotesView,
-        INotesAdapter {
+class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesView, INotesAdapter {
 
-    val adapter = NotesAdapter(this)
+    private val adapter = NotesAdapter(this)
 
-    var restorePosition: Int = -1
+    private var restorePosition: Int = -1
 
     override fun onNoteChosen(note: PresentableNote) {
         presenter.openNote(note)

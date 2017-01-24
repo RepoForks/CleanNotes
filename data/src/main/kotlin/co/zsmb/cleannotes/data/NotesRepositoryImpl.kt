@@ -5,7 +5,7 @@ import co.zsmb.cleannotes.domain.NotesRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class NotesRepositoryImpl @Inject constructor(val notesDataSourceDisk: NotesDataSource)
+class NotesRepositoryImpl @Inject constructor(private val notesDataSourceDisk: NotesDataSource)
     : NotesRepository {
 
     private val realmToDomain: (RealmNote) -> DomainNote = { DomainNote(it.id, it.title, it.content) }

@@ -14,9 +14,9 @@ interface NoteEditUseCases {
 
 }
 
-class NoteEditUseCasesImpl(val createNoteUseCase: CreateNoteUseCase,
-                           val getNoteUseCase: GetNoteUseCase,
-                           val updateNoteUseCase: UpdateNoteUseCase)
+class NoteEditUseCasesImpl(private val createNoteUseCase: CreateNoteUseCase,
+                           private val getNoteUseCase: GetNoteUseCase,
+                           private val updateNoteUseCase: UpdateNoteUseCase)
     : NoteEditUseCases {
 
     override fun getNoteUseCase(): GetNoteUseCase = getNoteUseCase

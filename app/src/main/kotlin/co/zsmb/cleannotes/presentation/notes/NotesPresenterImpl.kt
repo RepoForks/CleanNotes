@@ -9,9 +9,9 @@ import io.reactivex.Scheduler
 import javax.inject.Inject
 
 class NotesPresenterImpl @Inject constructor(
-        val navigator: Navigator,
-        val useCases: NotesUseCases,
-        val mainScheduler: Scheduler)
+        private val navigator: Navigator,
+        private val useCases: NotesUseCases,
+        private val mainScheduler: Scheduler)
     : BasePresenter<NotesView>(), NotesPresenter {
 
     override fun openNote(note: PresentableNote) {

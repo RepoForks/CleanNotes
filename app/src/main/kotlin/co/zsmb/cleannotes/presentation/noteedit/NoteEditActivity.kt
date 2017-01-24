@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_note_edit.*
 
 class NoteEditActivity : BaseView<NoteEditPresenter, NoteEditActivityComponent>(), NoteEditView {
 
-    var noteId = 0
+    private var noteId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

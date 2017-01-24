@@ -4,7 +4,7 @@ import io.reactivex.Observable
 import io.realm.Realm
 import javax.inject.Inject
 
-class NotesDataSourceDisk @Inject constructor(val realm: Realm)
+class NotesDataSourceDisk @Inject constructor(private val realm: Realm)
     : NotesDataSource {
 
     override fun getAll(): Observable<List<RealmNote>> {

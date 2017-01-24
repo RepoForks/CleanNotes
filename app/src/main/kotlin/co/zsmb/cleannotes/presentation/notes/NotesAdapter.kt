@@ -8,7 +8,7 @@ import co.zsmb.cleannotes.R
 import co.zsmb.cleannotes.presentation.util.inflate
 import org.jetbrains.anko.onClick
 
-class NotesAdapter(val listener: INotesAdapter) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter(private val listener: INotesAdapter) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     private var notes: List<PresentableNote> = listOf()
 
