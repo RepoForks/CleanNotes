@@ -37,6 +37,10 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
             .applicationComponent(NotesApplication.applicationComponent)
             .build()
 
+    override fun close() {
+        finish()
+    }
+
     override fun displayNote(note: DetailedNote) {
         noteId = note.id
         tvTitle.text = note.title
