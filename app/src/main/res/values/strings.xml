@@ -5,4 +5,7 @@
     <string name="action_edit">Edit</string>
     <string name="action_delete_note">Delete</string>
 
+    <string name="title">Title</string>
+    <string name="note_contents">Note contents</string>
+
 </resources>
