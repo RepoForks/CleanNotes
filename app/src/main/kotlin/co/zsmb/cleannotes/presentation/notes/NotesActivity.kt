@@ -12,7 +12,6 @@ import co.zsmb.cleannotes.presentation.base.BaseView
 import co.zsmb.cleannotes.presentation.util.scrollPosition
 import kotlinx.android.synthetic.main.activity_notes.*
 import org.jetbrains.anko.onClick
-import org.jetbrains.anko.toast
 
 class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesView, INotesAdapter {
 
@@ -73,10 +72,6 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
             recyclerView.scrollPosition = restorePosition
             restorePosition = -1
         }
-    }
-
-    override fun showMessage(message: String) {
-        toast(message)
     }
 
 }

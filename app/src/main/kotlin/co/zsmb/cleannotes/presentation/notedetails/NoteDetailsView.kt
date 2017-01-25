@@ -4,6 +4,4 @@ interface NoteDetailsView {
 
     fun displayNote(note: DetailedNote)
 
-    fun close()
-
 }
