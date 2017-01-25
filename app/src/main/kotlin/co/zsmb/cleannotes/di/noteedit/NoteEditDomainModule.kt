@@ -3,6 +3,7 @@ package co.zsmb.cleannotes.di.noteedit
 import co.zsmb.cleannotes.di.base.PerActivity
 import co.zsmb.cleannotes.domain.NotesRepository
 import co.zsmb.cleannotes.domain.usecase.CreateNoteUseCase
+import co.zsmb.cleannotes.domain.usecase.DeleteNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.GetNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.UpdateNoteUseCase
 import dagger.Module
@@ -15,9 +16,10 @@ class NoteEditDomainModule {
     @Provides @PerActivity
     fun provideNoteEditUseCases(createNoteUseCase: CreateNoteUseCase,
                                 getNoteUseCase: GetNoteUseCase,
-                                updateNoteUseCase: UpdateNoteUseCase)
+                                updateNoteUseCase: UpdateNoteUseCase,
+                                deleteNoteUseCase: DeleteNoteUseCase)
             : NoteEditUseCases
-            = NoteEditUseCasesImpl(createNoteUseCase, getNoteUseCase, updateNoteUseCase)
+            = NoteEditUseCasesImpl(createNoteUseCase, getNoteUseCase, updateNoteUseCase, deleteNoteUseCase)
 
     @Provides @PerActivity
     fun provideGetNoteUseCase(notesRepository: NotesRepository) = GetNoteUseCase(notesRepository, Schedulers.io())
@@ -27,5 +29,8 @@ class NoteEditDomainModule {
 
     @Provides @PerActivity
     fun provideUpdateNoteUseCase(notesRepository: NotesRepository) = UpdateNoteUseCase(notesRepository, Schedulers.io())
+
+    @Provides @PerActivity
+    fun provideDeleteNoteUseCase(notesRepository: NotesRepository) = DeleteNoteUseCase(notesRepository, Schedulers.io())
 
 }
