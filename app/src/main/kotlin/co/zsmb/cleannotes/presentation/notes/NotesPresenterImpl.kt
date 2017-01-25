@@ -25,9 +25,7 @@ class NotesPresenterImpl @Inject constructor(
                     it.map { PresentableNote(it.id, it.title, it.content) }.reversed()
                 }
                 .observeOn(mainScheduler)
-                .subscribe {
-                    showNotes(it)
-                }
+                .subscribe { notes -> showNotes(notes) }
     }
 
     private fun showNotes(notes: List<PresentableNote>) {

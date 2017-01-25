@@ -3,8 +3,8 @@ package co.zsmb.cleannotes.domain.usecase
 import co.zsmb.cleannotes.domain.DomainNote
 import co.zsmb.cleannotes.domain.NotesRepository
 import co.zsmb.cleannotes.domain.base.UseCase
-import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import javax.inject.Inject
 
 class CreateTestNotesUseCase @Inject constructor(
@@ -12,9 +12,9 @@ class CreateTestNotesUseCase @Inject constructor(
         scheduler: Scheduler)
     : UseCase<Int, List<DomainNote>>(scheduler) {
 
-    override fun createObservable(params: List<DomainNote>): Observable<Int> {
+    override fun createObservable(params: List<DomainNote>): Single<Int> {
         notesRepository.addAll(params)
-        return Observable.just(params.size)
+        return Single.just(params.size)
     }
 
 }

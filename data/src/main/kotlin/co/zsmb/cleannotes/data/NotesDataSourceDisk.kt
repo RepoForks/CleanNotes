@@ -1,18 +1,17 @@
 package co.zsmb.cleannotes.data
 
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.realm.Realm
 
 class NotesDataSourceDisk : NotesDataSource {
-
-    override fun getAll(): Observable<List<RealmNote>> {
+    override fun getAll(): Single<List<RealmNote>> {
         val notes = withRealm {
             where(RealmNote::class.java).findAll().map { copyFromRealm(it) }
         }
-        return Observable.just(notes)
+        return Single.just(notes)
     }
 
-    override fun get(id: Int): Observable<RealmNote> {
+    override fun get(id: Int): Single<RealmNote> {
         val note = withRealm {
             val managedNote = where(RealmNote::class.java).equalTo("id", id).findFirst()
 
@@ -20,44 +19,64 @@ class NotesDataSourceDisk : NotesDataSource {
         }
 
         if (note == null) {
-            return Observable.error(RuntimeException("No note exists with id $id"))
+            return Single.error(RuntimeException("No note exists with id $id"))
         }
         else {
-            return Observable.just(note)
+            return Single.just(note)
         }
     }
 
-    override fun add(note: RealmNote): Observable<Int> {
+    override fun add(note: RealmNote): Single<Int> {
         withRealmTransaction {
             note.giveId(this)
             insert(note)
         }
-        return Observable.just(note.id)
+        return Single.just(note.id)
     }
 
-    override fun addAll(notes: List<RealmNote>): Observable<Int> {
+    override fun addAll(notes: List<RealmNote>): Single<List<Int>> {
         // TODO check for failure somehow
         withRealmTransaction {
             notes.giveIds(this)
             insert(notes)
         }
-        return Observable.just(notes.size)
+        val ids = notes.map { it.id }
+        return Single.just(ids)
     }
 
-    override fun update(note: RealmNote): Observable<Int> {
+    override fun update(note: RealmNote): Single<Boolean> {
         // TODO check for failure somehow
         withRealmTransaction {
             insertOrUpdate(note)
         }
-        return Observable.just(1)
+        return Single.just(true)
     }
 
-    override fun updateAll(notes: List<RealmNote>): Observable<Int> {
+    override fun updateAll(notes: List<RealmNote>): Single<Int> {
         // TODO check for failure somehow
         withRealmTransaction {
             insertOrUpdate(notes)
         }
-        return Observable.just(notes.size)
+        return Single.just(notes.size)
+    }
+
+    override fun delete(noteId: Int): Single<Boolean> {
+        // TODO check for failure somehow
+        withRealmTransaction {
+            where(RealmNote::class.java).equalTo("id", noteId).findFirst().deleteFromRealm()
+        }
+        return Single.just(true)
+    }
+
+    override fun deleteAll(notes: List<Int>): Single<Int> {
+        if (notes.isEmpty()) {
+            return Single.just(0)
+        }
+
+        withRealmTransaction {
+            where(RealmNote::class.java).`in`("id", notes.toTypedArray()).findAll().deleteAllFromRealm()
+        }
+        return Single.just(notes.size)
     }
 
     private fun createNewId(realm: Realm): Int {

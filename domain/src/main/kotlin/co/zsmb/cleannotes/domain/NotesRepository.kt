@@ -1,19 +1,23 @@
 package co.zsmb.cleannotes.domain
 
-import io.reactivex.Observable
+import io.reactivex.Single
 
 interface NotesRepository {
 
-    fun get(id: Int): Observable<DomainNote>
+    fun get(noteId: Int): Single<DomainNote>
 
-    fun getAll(): Observable<List<DomainNote>>
+    fun getAll(): Single<List<DomainNote>>
 
-    fun add(note: DomainNote): Observable<Int>
+    fun add(note: DomainNote): Single<Int>
 
-    fun addAll(notes: List<DomainNote>): Observable<Int>
+    fun addAll(notes: List<DomainNote>): Single<List<Int>>
 
-    fun update(note: DomainNote): Observable<Int>
+    fun update(note: DomainNote): Single<Boolean>
 
-    fun updateAll(notes: List<DomainNote>): Observable<Int>
+    fun updateAll(notes: List<DomainNote>): Single<Int>
+
+    fun delete(noteId: Int): Single<Boolean>
+
+    fun deleteAll(noteIds: List<Int>): Single<Int>
 
 }

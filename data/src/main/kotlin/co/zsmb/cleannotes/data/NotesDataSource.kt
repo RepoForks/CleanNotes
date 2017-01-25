@@ -1,19 +1,23 @@
 package co.zsmb.cleannotes.data
 
-import io.reactivex.Observable
+import io.reactivex.Single
 
 interface NotesDataSource {
 
-    fun get(id: Int): Observable<RealmNote>
+    fun get(noteId: Int): Single<RealmNote>
 
-    fun getAll(): Observable<List<RealmNote>>
+    fun getAll(): Single<List<RealmNote>>
 
-    fun add(note: RealmNote): Observable<Int>
+    fun add(note: RealmNote): Single<Int>
 
-    fun addAll(notes: List<RealmNote>): Observable<Int>
+    fun addAll(notes: List<RealmNote>): Single<List<Int>>
 
-    fun update(note: RealmNote): Observable<Int>
+    fun update(note: RealmNote): Single<Boolean>
 
-    fun updateAll(notes: List<RealmNote>): Observable<Int>
+    fun updateAll(notes: List<RealmNote>): Single<Int>
+
+    fun delete(noteId: Int): Single<Boolean>
+
+    fun deleteAll(noteIds: List<Int>): Single<Int>
 
 }

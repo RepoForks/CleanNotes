@@ -3,8 +3,8 @@ package co.zsmb.cleannotes.presentation.noteedit
 import co.zsmb.cleannotes.di.noteedit.NoteEditUseCases
 import co.zsmb.cleannotes.domain.DomainNote
 import co.zsmb.cleannotes.presentation.base.BasePresenter
-import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import javax.inject.Inject
 
 class NoteEditPresenterImpl @Inject constructor(
@@ -24,12 +24,10 @@ class NoteEditPresenterImpl @Inject constructor(
         subscriptions += useCases.getNoteUseCase().execute(id).subscribeToShow()
     }
 
-    private fun Observable<DomainNote>.subscribeToShow() = this
+    private fun Single<DomainNote>.subscribeToShow() = this
             .map { EditableNote(it.id, it.title, it.content) }
             .observeOn(mainScheduler)
-            .subscribe {
-                showNote(it)
-            }
+            .subscribe { note -> showNote(note) }
 
     override fun saveNote(note: EditableNote) {
         val domainNote = DomainNote(note.id, note.title, note.content)
