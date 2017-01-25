@@ -1,7 +1,7 @@
 package co.zsmb.cleannotes.presentation.notedetails
 
 import android.util.Log
-import co.zsmb.cleannotes.domain.usecase.GetNoteUseCase
+import co.zsmb.cleannotes.di.notedetails.NoteDetailsUseCases
 import co.zsmb.cleannotes.presentation.base.BasePresenter
 import co.zsmb.cleannotes.presentation.base.Navigator
 import co.zsmb.cleannotes.presentation.noteedit.NoteEditActivity
@@ -10,12 +10,20 @@ import javax.inject.Inject
 
 class NoteDetailsPresenterImpl @Inject constructor(
         private val navigator: Navigator,
-        private val getNoteUseCase: GetNoteUseCase,
+        private val useCases: NoteDetailsUseCases,
         private val mainScheduler: Scheduler)
     : BasePresenter<NoteDetailsView>(), NoteDetailsPresenter {
 
     override fun editNote(noteId: Int) {
         navigator.goto(NoteEditActivity::class, "id" to noteId)
+    }
+
+    override fun deleteNote(noteId: Int) {
+        subscriptions += useCases.deleteNoteUseCase().execute(noteId)
+                .observeOn(mainScheduler)
+                .subscribe { success ->
+                    view?.close()
+                }
     }
 
     companion object {
@@ -27,7 +35,7 @@ class NoteDetailsPresenterImpl @Inject constructor(
     }
 
     override fun loadNote(id: Int) {
-        subscriptions += getNoteUseCase.execute(id)
+        subscriptions += useCases.getNoteUseCase().execute(id)
                 .map {
                     DetailedNote(it.id, it.title, it.content)
                 }

@@ -1,6 +1,7 @@
 package co.zsmb.cleannotes.di.notedetails
 
 import co.zsmb.cleannotes.di.base.PerActivity
+import co.zsmb.cleannotes.domain.usecase.DeleteNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.GetNoteUseCase
 import co.zsmb.cleannotes.presentation.base.Navigator
 import co.zsmb.cleannotes.presentation.notedetails.NoteDetailsPresenter
@@ -14,8 +15,14 @@ class NoteDetailsPresentationModule {
 
     @Provides @PerActivity
     fun provideNoteDetailsPresenter(navigator: Navigator,
-                                    getNoteUseCase: GetNoteUseCase)
+                                    noteDetailsUseCases: NoteDetailsUseCases)
             : NoteDetailsPresenter
-            = NoteDetailsPresenterImpl(navigator, getNoteUseCase, AndroidSchedulers.mainThread())
+            = NoteDetailsPresenterImpl(navigator, noteDetailsUseCases, AndroidSchedulers.mainThread())
+
+    @Provides @PerActivity
+    fun provideNoteDetailsUseCases(getNoteUseCase: GetNoteUseCase,
+                                   deleteNoteUseCase: DeleteNoteUseCase)
+            : NoteDetailsUseCases
+            = NoteDetailsUseCasesImpl(getNoteUseCase, deleteNoteUseCase)
 
 }

@@ -11,15 +11,15 @@ class NotesDataSourceDisk : NotesDataSource {
         return Single.just(notes)
     }
 
-    override fun get(id: Int): Single<RealmNote> {
+    override fun get(noteId: Int): Single<RealmNote> {
         val note = withRealm {
-            val managedNote = where(RealmNote::class.java).equalTo("id", id).findFirst()
+            val managedNote = where(RealmNote::class.java).equalTo("id", noteId).findFirst()
 
             if (managedNote == null) null else copyFromRealm(managedNote)
         }
 
         if (note == null) {
-            return Single.error(RuntimeException("No note exists with id $id"))
+            return Single.error(RuntimeException("No note exists with id $noteId"))
         }
         else {
             return Single.just(note)
@@ -68,15 +68,15 @@ class NotesDataSourceDisk : NotesDataSource {
         return Single.just(true)
     }
 
-    override fun deleteAll(notes: List<Int>): Single<Int> {
-        if (notes.isEmpty()) {
+    override fun deleteAll(noteIds: List<Int>): Single<Int> {
+        if (noteIds.isEmpty()) {
             return Single.just(0)
         }
 
         withRealmTransaction {
-            where(RealmNote::class.java).`in`("id", notes.toTypedArray()).findAll().deleteAllFromRealm()
+            where(RealmNote::class.java).`in`("id", noteIds.toTypedArray()).findAll().deleteAllFromRealm()
         }
-        return Single.just(notes.size)
+        return Single.just(noteIds.size)
     }
 
     private fun createNewId(realm: Realm): Int {

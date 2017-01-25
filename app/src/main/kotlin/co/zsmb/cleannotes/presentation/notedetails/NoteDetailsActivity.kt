@@ -58,6 +58,10 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
                     presenter.editNote(noteId)
                     true
                 }
+                R.id.action_delete_note -> {
+                    presenter.deleteNote(noteId)
+                    true
+                }
                 else -> super.onOptionsItemSelected(item)
             }
 

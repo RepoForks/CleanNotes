@@ -8,4 +8,6 @@ interface NoteDetailsPresenter : Presenter<NoteDetailsView> {
 
     fun editNote(noteId: Int)
 
+    fun deleteNote(noteId: Int)
+
 }
