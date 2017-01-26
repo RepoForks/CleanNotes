@@ -1,13 +1,14 @@
 package co.zsmb.cleannotes.data
 
 import co.zsmb.cleannotes.domain.DomainNote
-import co.zsmb.cleannotes.domain.NotesRepository
+import co.zsmb.cleannotes.domain.NoteRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class NotesRepositoryImpl @Inject constructor(private val notesDataSourceDisk: NotesDataSource)
-    : NotesRepository {
+class NoteRepositoryImpl @Inject constructor(private val notesDataSourceDisk: NotesDataSource)
+    : NoteRepository {
 
+    // TODO factor conversions to separate class that can then be tested
     private val realmToDomain: (RealmNote) -> DomainNote = { DomainNote(it.id, it.title, it.content, it.timestamp) }
     private val domainToRealm: (DomainNote) -> RealmNote = { RealmNote(it.id, it.title, it.content, it.timestamp) }
 

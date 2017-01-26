@@ -58,8 +58,15 @@ class NoteDetailsPresenterImpl @Inject constructor(
                 )
     }
 
+    private fun DetailedNote.isBlank() = title.isBlank() && content.isBlank()
+
     private fun showNote(note: DetailedNote) {
-        view?.displayNote(note)
+        if (note.isBlank()) {
+            view?.close()
+        }
+        else {
+            view?.displayNote(note)
+        }
     }
 
 }

@@ -2,7 +2,7 @@ package co.zsmb.cleannotes.domain
 
 import io.reactivex.Single
 
-interface NotesRepository {
+interface NoteRepository {
 
     fun add(note: DomainNote): Single<Int>
 

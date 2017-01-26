@@ -1,6 +1,6 @@
 package co.zsmb.cleannotes.di.notedetails
 
-import co.zsmb.cleannotes.domain.NotesRepository
+import co.zsmb.cleannotes.domain.NoteRepository
 import co.zsmb.cleannotes.domain.usecase.DeleteNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.GetNoteUseCase
 import co.zsmb.cleannotes.presentation.base.PerActivity
@@ -12,11 +12,11 @@ import io.reactivex.schedulers.Schedulers
 class NoteDetailsDomainModule {
 
     @Provides @PerActivity
-    fun provideGetNoteUseCase(notesRepository: NotesRepository): GetNoteUseCase
-            = GetNoteUseCase(notesRepository, Schedulers.io())
+    fun provideGetNoteUseCase(noteRepository: NoteRepository): GetNoteUseCase
+            = GetNoteUseCase(noteRepository, Schedulers.io())
 
     @Provides @PerActivity
-    fun provideDeleteNoteUseCase(notesRepository: NotesRepository): DeleteNoteUseCase
-            = DeleteNoteUseCase(notesRepository, Schedulers.io())
+    fun provideDeleteNoteUseCase(noteRepository: NoteRepository): DeleteNoteUseCase
+            = DeleteNoteUseCase(noteRepository, Schedulers.io())
 
 }

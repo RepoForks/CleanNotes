@@ -1,7 +1,7 @@
 package co.zsmb.cleannotes.di.application
 
 import android.content.Context
-import co.zsmb.cleannotes.domain.NotesRepository
+import co.zsmb.cleannotes.domain.NoteRepository
 import co.zsmb.cleannotes.presentation.base.Navigator
 import dagger.Component
 import javax.inject.Singleton
@@ -18,6 +18,6 @@ interface ApplicationComponent {
 
     fun navigator(): Navigator
 
-    fun notesRepository(): NotesRepository
+    fun notesRepository(): NoteRepository
 
 }

@@ -1,6 +1,6 @@
 package co.zsmb.cleannotes.di.notes
 
-import co.zsmb.cleannotes.domain.NotesRepository
+import co.zsmb.cleannotes.domain.NoteRepository
 import co.zsmb.cleannotes.domain.usecase.GetAllNotesUseCase
 import co.zsmb.cleannotes.presentation.base.PerActivity
 import dagger.Module
@@ -16,7 +16,7 @@ class NotesDomainModule {
             = NotesUseCasesImpl(getAllNotesUseCase)
 
     @Provides @PerActivity
-    fun provideGetAllNotesUseCase(notesRepository: NotesRepository)
-            = GetAllNotesUseCase(notesRepository, Schedulers.io())
+    fun provideGetAllNotesUseCase(noteRepository: NoteRepository)
+            = GetAllNotesUseCase(noteRepository, Schedulers.io())
 
 }
