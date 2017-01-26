@@ -11,6 +11,10 @@ buildscript {
 
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
+
+    test {
+        java.srcDirs = ['src/test/kotlin']
+    }
 }
 
 dependencies {
@@ -28,6 +32,13 @@ dependencies {
 
     /* DI */
     compile dependencies.javaxInject
+
+    /* Testing */
+    compile dependencies.junit
+
+    /* Mockito */
+    testCompile dependencies.mockitoCore
+    testCompile dependencies.mockitoKotlin
 }
 
 targetCompatibility = '1.7'

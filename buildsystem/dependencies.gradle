@@ -48,12 +48,17 @@ ext {
     ]
 
     domainDependencies = [
-            kotlin     : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            kotlin       : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
 
-            rxJava     : "io.reactivex.rxjava2:rxjava:$rxjava_version",
-            rxKotlin   : "io.reactivex:rxkotlin:$rxkotlin_version",
+            rxJava       : "io.reactivex.rxjava2:rxjava:$rxjava_version",
+            rxKotlin     : "io.reactivex:rxkotlin:$rxkotlin_version",
 
-            javaxInject: "javax.inject:javax.inject:$javax_version"
+            javaxInject  : "javax.inject:javax.inject:$javax_version",
+
+            junit        : "junit:junit:$junit_version",
+
+            mockitoCore  : "org.mockito:mockito-core:$mockitoCore_version",
+            mockitoKotlin: "com.nhaarman:mockito-kotlin:$mockitoKotlin_version",
     ]
 
     dataDependencies = [
