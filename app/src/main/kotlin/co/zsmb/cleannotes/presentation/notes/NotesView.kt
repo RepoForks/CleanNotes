@@ -1,6 +1,8 @@
 package co.zsmb.cleannotes.presentation.notes
 
-interface NotesView {
+import co.zsmb.cleannotes.presentation.base.View
+
+interface NotesView : View {
 
     fun displayNotes(notes: List<PresentableNote>)
 

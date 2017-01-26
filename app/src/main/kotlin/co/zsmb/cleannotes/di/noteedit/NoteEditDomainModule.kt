@@ -1,11 +1,11 @@
 package co.zsmb.cleannotes.di.noteedit
 
-import co.zsmb.cleannotes.di.base.PerActivity
 import co.zsmb.cleannotes.domain.NotesRepository
 import co.zsmb.cleannotes.domain.usecase.CreateNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.DeleteNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.GetNoteUseCase
 import co.zsmb.cleannotes.domain.usecase.UpdateNoteUseCase
+import co.zsmb.cleannotes.presentation.base.PerActivity
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers

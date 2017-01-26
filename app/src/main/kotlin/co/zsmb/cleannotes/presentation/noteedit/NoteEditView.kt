@@ -1,6 +1,8 @@
 package co.zsmb.cleannotes.presentation.noteedit
 
-interface NoteEditView {
+import co.zsmb.cleannotes.presentation.base.View
+
+interface NoteEditView : View {
 
     fun displayNote(note: EditableNote)
 

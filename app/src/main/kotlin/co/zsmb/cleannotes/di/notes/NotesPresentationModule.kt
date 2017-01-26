@@ -1,7 +1,7 @@
 package co.zsmb.cleannotes.di.notes
 
-import co.zsmb.cleannotes.di.base.PerActivity
 import co.zsmb.cleannotes.presentation.base.Navigator
+import co.zsmb.cleannotes.presentation.base.PerActivity
 import co.zsmb.cleannotes.presentation.notes.NotesPresenter
 import co.zsmb.cleannotes.presentation.notes.NotesPresenterImpl
 import dagger.Module

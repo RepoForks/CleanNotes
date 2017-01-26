@@ -1,8 +1,8 @@
 package co.zsmb.cleannotes.di.notedetails
 
 import co.zsmb.cleannotes.di.application.ApplicationComponent
-import co.zsmb.cleannotes.di.base.ActivityComponent
-import co.zsmb.cleannotes.di.base.PerActivity
+import co.zsmb.cleannotes.presentation.base.ActivityComponent
+import co.zsmb.cleannotes.presentation.base.PerActivity
 import co.zsmb.cleannotes.presentation.notedetails.NoteDetailsPresenter
 import dagger.Component
 

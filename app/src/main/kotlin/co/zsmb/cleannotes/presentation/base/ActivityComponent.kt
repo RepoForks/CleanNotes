@@ -1,4 +1,4 @@
-package co.zsmb.cleannotes.di.base
+package co.zsmb.cleannotes.presentation.base
 
 interface ActivityComponent<out PR> {
 

@@ -1,9 +1,9 @@
 package co.zsmb.cleannotes.di.notes
 
-import co.zsmb.cleannotes.di.base.PerActivity
 import co.zsmb.cleannotes.domain.NotesRepository
 import co.zsmb.cleannotes.domain.usecase.CreateTestNotesUseCase
 import co.zsmb.cleannotes.domain.usecase.GetAllNotesUseCase
+import co.zsmb.cleannotes.presentation.base.PerActivity
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
