@@ -6,14 +6,17 @@ import android.view.ViewGroup
 import android.widget.TextView
 import co.zsmb.cleannotes.R
 import co.zsmb.cleannotes.presentation.util.inflate
+import io.reactivex.subjects.PublishSubject
 import org.jetbrains.anko.onClick
 
-class NotesAdapter(private val listener: INotesAdapter) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
+class NotesAdapter : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     private var notes: List<PresentableNote> = listOf()
 
     val isEmpty: Boolean
         get() = notes.isEmpty()
+
+    val itemSelections: PublishSubject<PresentableNote> = PublishSubject.create()
 
     override fun getItemCount() = notes.size
 
@@ -24,7 +27,7 @@ class NotesAdapter(private val listener: INotesAdapter) : RecyclerView.Adapter<N
         holder.content.text = note.content
 
         holder.itemView.onClick {
-            listener.onNoteChosen(note)
+            itemSelections.onNext(note)
         }
     }
 
@@ -42,12 +45,6 @@ class NotesAdapter(private val listener: INotesAdapter) : RecyclerView.Adapter<N
 
         val title: TextView = view.findViewById(R.id.tvTitle) as TextView
         val content: TextView = view.findViewById(R.id.tvContent) as TextView
-
-    }
-
-    interface INotesAdapter {
-
-        fun onNoteChosen(note: PresentableNote)
 
     }
 

@@ -10,14 +10,17 @@ import co.zsmb.cleannotes.di.notes.DaggerNotesActivityComponent
 import co.zsmb.cleannotes.di.notes.NotesActivityComponent
 import co.zsmb.cleannotes.presentation.base.BaseView
 import co.zsmb.cleannotes.presentation.util.scrollPosition
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_notes.*
 import org.jetbrains.anko.onClick
 
-class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesView, NotesAdapter.INotesAdapter {
+class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesView {
 
-    private val adapter = NotesAdapter(this)
+    private val adapter = NotesAdapter()
 
     private var restorePosition: Int = -1
+
+    lateinit var itemClickSubscription: Disposable
 
     override fun createComponent(): NotesActivityComponent
             = DaggerNotesActivityComponent.builder()
@@ -31,7 +34,14 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
 
         setupRecyclerView(savedInstanceState)
 
+        itemClickSubscription = adapter.itemSelections.subscribe { presenter.openNote(it) }
+
         fab.onClick { presenter.createNote() }
+    }
+
+    override fun onDestroy() {
+        itemClickSubscription.dispose()
+        super.onDestroy()
     }
 
     private fun setupRecyclerView(savedInstanceState: Bundle?) {
@@ -68,10 +78,6 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
             recyclerView.scrollPosition = restorePosition
             restorePosition = -1
         }
-    }
-
-    override fun onNoteChosen(note: PresentableNote) {
-        presenter.openNote(note)
     }
 
 }
