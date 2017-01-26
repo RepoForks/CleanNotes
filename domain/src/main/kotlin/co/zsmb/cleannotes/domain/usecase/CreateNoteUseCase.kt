@@ -14,7 +14,7 @@ class CreateNoteUseCase @Inject constructor(
 
     override fun createObservable(params: Unit): Single<DomainNote> {
         return notesRepository.add(DomainNote(0, "", ""))
-                .flatMap { notesRepository.get(it) }
+                .map { notesRepository.get(it).blockingGet() }
     }
 
 }

@@ -4,6 +4,7 @@ import io.reactivex.Single
 import io.realm.Realm
 
 class NotesDataSourceDisk : NotesDataSource {
+
     override fun getAll(): Single<List<RealmNote>> {
         val notes = withRealm {
             where(RealmNote::class.java).findAll().map { copyFromRealm(it) }

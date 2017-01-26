@@ -23,7 +23,6 @@ class NotesRepositoryImpl @Inject constructor(private val notesDataSourceDisk: N
 
     override fun addAll(notes: List<DomainNote>): Single<List<Int>> {
         val realmNotes = notes.map(domainToRealm)
-
         return notesDataSourceDisk.addAll(realmNotes)
     }
 
