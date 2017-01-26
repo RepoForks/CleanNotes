@@ -14,8 +14,8 @@ class NoteDetailsPresenterImpl @Inject constructor(
         private val mainScheduler: Scheduler)
     : BasePresenter<NoteDetailsView>(), NoteDetailsPresenter {
 
-    override fun editNote(noteId: Int) {
-        navigator.goto(NoteEditActivity::class, "id" to noteId)
+    companion object {
+        private val TAG = "NDPresenterImpl"
     }
 
     override fun deleteNote(noteId: Int) {
@@ -26,12 +26,8 @@ class NoteDetailsPresenterImpl @Inject constructor(
                 }
     }
 
-    companion object {
-        private val TAG = "NDPresenterImpl"
-    }
-
-    private fun showNote(note: DetailedNote) {
-        view?.displayNote(note)
+    override fun editNote(noteId: Int) {
+        navigator.goto(NoteEditActivity::class, "id" to noteId)
     }
 
     override fun loadNote(id: Int) {
@@ -48,6 +44,10 @@ class NoteDetailsPresenterImpl @Inject constructor(
                             Log.e(TAG, "Could not load note")
                         }
                 )
+    }
+
+    private fun showNote(note: DetailedNote) {
+        view?.displayNote(note)
     }
 
 }

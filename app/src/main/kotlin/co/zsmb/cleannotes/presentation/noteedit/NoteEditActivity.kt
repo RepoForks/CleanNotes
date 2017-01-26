@@ -13,6 +13,11 @@ class NoteEditActivity : BaseView<NoteEditPresenter, NoteEditActivityComponent>(
 
     private var noteId = 0
 
+    override fun createComponent(): NoteEditActivityComponent
+            = DaggerNoteEditActivityComponent.builder()
+            .applicationComponent(NotesApplication.applicationComponent)
+            .build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_edit)
@@ -28,18 +33,6 @@ class NoteEditActivity : BaseView<NoteEditPresenter, NoteEditActivityComponent>(
         }
     }
 
-    override fun createComponent(): NoteEditActivityComponent
-            = DaggerNoteEditActivityComponent.builder()
-            .applicationComponent(NotesApplication.applicationComponent)
-            .build()
-
-    override fun displayNote(note: EditableNote) {
-        noteId = note.id
-
-        etTitle.setText(note.title)
-        etContent.setText(note.content)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem) =
             when (item.itemId) {
                 android.R.id.home -> {
@@ -52,6 +45,13 @@ class NoteEditActivity : BaseView<NoteEditPresenter, NoteEditActivityComponent>(
     override fun onPause() {
         super.onPause()
         saveNote()
+    }
+
+    override fun displayNote(note: EditableNote) {
+        noteId = note.id
+
+        etTitle.setText(note.title)
+        etContent.setText(note.content)
     }
 
     private fun saveNote() {

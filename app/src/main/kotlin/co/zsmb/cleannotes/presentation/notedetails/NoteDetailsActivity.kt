@@ -14,6 +14,11 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
 
     private var noteId: Int = 0
 
+    override fun createComponent(): NoteDetailsActivityComponent
+            = DaggerNoteDetailsActivityComponent.builder()
+            .applicationComponent(NotesApplication.applicationComponent)
+            .build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note_details)
@@ -30,17 +35,6 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
         super.onResume()
 
         presenter.loadNote(noteId)
-    }
-
-    override fun createComponent(): NoteDetailsActivityComponent
-            = DaggerNoteDetailsActivityComponent.builder()
-            .applicationComponent(NotesApplication.applicationComponent)
-            .build()
-
-    override fun displayNote(note: DetailedNote) {
-        noteId = note.id
-        tvTitle.text = note.title
-        tvContent.text = note.content
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -60,5 +54,11 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
                 }
                 else -> super.onOptionsItemSelected(item)
             }
+
+    override fun displayNote(note: DetailedNote) {
+        noteId = note.id
+        tvTitle.text = note.title
+        tvContent.text = note.content
+    }
 
 }

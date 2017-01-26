@@ -12,6 +12,5 @@ import dagger.Component
         modules = arrayOf(
                 NoteEditPresentationModule::class,
                 NoteEditDomainModule::class
-        )
-)
+        ))
 interface NoteEditActivityComponent : ActivityComponent<NoteEditPresenter>, NoteEditUseCases

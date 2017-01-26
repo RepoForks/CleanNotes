@@ -13,15 +13,11 @@ import co.zsmb.cleannotes.presentation.util.scrollPosition
 import kotlinx.android.synthetic.main.activity_notes.*
 import org.jetbrains.anko.onClick
 
-class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesView, INotesAdapter {
+class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesView, NotesAdapter.INotesAdapter {
 
     private val adapter = NotesAdapter(this)
 
     private var restorePosition: Int = -1
-
-    override fun onNoteChosen(note: PresentableNote) {
-        presenter.openNote(note)
-    }
 
     override fun createComponent(): NotesActivityComponent
             = DaggerNotesActivityComponent.builder()
@@ -38,14 +34,6 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
         fab.onClick { presenter.createNote() }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        if (!adapter.isEmpty) {
-            outState.putInt("position", recyclerView.scrollPosition)
-        }
-
-        super.onSaveInstanceState(outState)
-    }
-
     private fun setupRecyclerView(savedInstanceState: Bundle?) {
         recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerView.adapter = adapter
@@ -60,6 +48,14 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        if (!adapter.isEmpty) {
+            outState.putInt("position", recyclerView.scrollPosition)
+        }
+
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onResume() {
         super.onResume()
         presenter.loadNotes()
@@ -72,6 +68,10 @@ class NotesActivity : BaseView<NotesPresenter, NotesActivityComponent>(), NotesV
             recyclerView.scrollPosition = restorePosition
             restorePosition = -1
         }
+    }
+
+    override fun onNoteChosen(note: PresentableNote) {
+        presenter.openNote(note)
     }
 
 }

@@ -6,7 +6,9 @@ import io.reactivex.Scheduler
 
 import javax.inject.Inject
 
-class DeleteNoteUseCase @Inject constructor(private val notesRepository: NotesRepository, scheduler: Scheduler)
+class DeleteNoteUseCase @Inject constructor(
+        private val notesRepository: NotesRepository,
+        scheduler: Scheduler)
     : UseCase<Boolean, Int>(scheduler) {
 
     override fun createObservable(params: Int) = notesRepository.delete(params)

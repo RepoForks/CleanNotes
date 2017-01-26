@@ -12,10 +12,6 @@ class NoteEditPresenterImpl @Inject constructor(
         private val mainScheduler: Scheduler)
     : BasePresenter<NoteEditView>(), NoteEditPresenter {
 
-    private fun showNote(note: EditableNote) {
-        view?.displayNote(note)
-    }
-
     override fun createNote() {
         subscriptions += useCases.createNoteUseCase().execute(Unit).subscribeToShow()
     }
@@ -28,6 +24,10 @@ class NoteEditPresenterImpl @Inject constructor(
             .map { EditableNote(it.id, it.title, it.content) }
             .observeOn(mainScheduler)
             .subscribe { note -> showNote(note) }
+
+    private fun showNote(note: EditableNote) {
+        view?.displayNote(note)
+    }
 
     override fun saveNote(note: EditableNote) {
         val domainNote = DomainNote(note.id, note.title, note.content)

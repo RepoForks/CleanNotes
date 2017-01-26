@@ -4,10 +4,10 @@ import co.zsmb.cleannotes.presentation.base.Presenter
 
 interface NoteDetailsPresenter : Presenter<NoteDetailsView> {
 
-    fun loadNote(id: Int)
+    fun deleteNote(noteId: Int)
 
     fun editNote(noteId: Int)
 
-    fun deleteNote(noteId: Int)
+    fun loadNote(id: Int)
 
 }

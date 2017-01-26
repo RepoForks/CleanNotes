@@ -22,15 +22,19 @@ class NoteEditDomainModule {
             = NoteEditUseCasesImpl(createNoteUseCase, getNoteUseCase, updateNoteUseCase, deleteNoteUseCase)
 
     @Provides @PerActivity
-    fun provideGetNoteUseCase(notesRepository: NotesRepository) = GetNoteUseCase(notesRepository, Schedulers.io())
+    fun provideGetNoteUseCase(notesRepository: NotesRepository)
+            = GetNoteUseCase(notesRepository, Schedulers.io())
 
     @Provides @PerActivity
-    fun provideCreateNoteUseCase(notesRepository: NotesRepository) = CreateNoteUseCase(notesRepository, Schedulers.io())
+    fun provideCreateNoteUseCase(notesRepository: NotesRepository)
+            = CreateNoteUseCase(notesRepository, Schedulers.io())
 
     @Provides @PerActivity
-    fun provideUpdateNoteUseCase(notesRepository: NotesRepository) = UpdateNoteUseCase(notesRepository, Schedulers.io())
+    fun provideUpdateNoteUseCase(notesRepository: NotesRepository)
+            = UpdateNoteUseCase(notesRepository, Schedulers.io())
 
     @Provides @PerActivity
-    fun provideDeleteNoteUseCase(notesRepository: NotesRepository) = DeleteNoteUseCase(notesRepository, Schedulers.io())
+    fun provideDeleteNoteUseCase(notesRepository: NotesRepository)
+            = DeleteNoteUseCase(notesRepository, Schedulers.io())
 
 }

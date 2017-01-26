@@ -5,6 +5,43 @@ import io.realm.Realm
 
 class NotesDataSourceDisk : NotesDataSource {
 
+    override fun add(note: RealmNote): Single<Int> {
+        withRealmTransaction {
+            note.giveId(this)
+            insert(note)
+        }
+        return Single.just(note.id)
+    }
+
+    override fun addAll(notes: List<RealmNote>): Single<List<Int>> {
+        // TODO check for failure somehow
+        withRealmTransaction {
+            notes.giveIds(this)
+            insert(notes)
+        }
+        val ids = notes.map { it.id }
+        return Single.just(ids)
+    }
+
+    override fun delete(noteId: Int): Single<Boolean> {
+        // TODO check for failure somehow
+        withRealmTransaction {
+            where(RealmNote::class.java).equalTo("id", noteId).findFirst().deleteFromRealm()
+        }
+        return Single.just(true)
+    }
+
+    override fun deleteAll(noteIds: List<Int>): Single<Int> {
+        if (noteIds.isEmpty()) {
+            return Single.just(0)
+        }
+
+        withRealmTransaction {
+            where(RealmNote::class.java).`in`("id", noteIds.toTypedArray()).findAll().deleteAllFromRealm()
+        }
+        return Single.just(noteIds.size)
+    }
+
     override fun getAll(): Single<List<RealmNote>> {
         val notes = withRealm {
             where(RealmNote::class.java).findAll().map { copyFromRealm(it) }
@@ -27,24 +64,6 @@ class NotesDataSourceDisk : NotesDataSource {
         }
     }
 
-    override fun add(note: RealmNote): Single<Int> {
-        withRealmTransaction {
-            note.giveId(this)
-            insert(note)
-        }
-        return Single.just(note.id)
-    }
-
-    override fun addAll(notes: List<RealmNote>): Single<List<Int>> {
-        // TODO check for failure somehow
-        withRealmTransaction {
-            notes.giveIds(this)
-            insert(notes)
-        }
-        val ids = notes.map { it.id }
-        return Single.just(ids)
-    }
-
     override fun update(note: RealmNote): Single<Boolean> {
         // TODO check for failure somehow
         withRealmTransaction {
@@ -59,25 +78,6 @@ class NotesDataSourceDisk : NotesDataSource {
             insertOrUpdate(notes)
         }
         return Single.just(notes.size)
-    }
-
-    override fun delete(noteId: Int): Single<Boolean> {
-        // TODO check for failure somehow
-        withRealmTransaction {
-            where(RealmNote::class.java).equalTo("id", noteId).findFirst().deleteFromRealm()
-        }
-        return Single.just(true)
-    }
-
-    override fun deleteAll(noteIds: List<Int>): Single<Int> {
-        if (noteIds.isEmpty()) {
-            return Single.just(0)
-        }
-
-        withRealmTransaction {
-            where(RealmNote::class.java).`in`("id", noteIds.toTypedArray()).findAll().deleteAllFromRealm()
-        }
-        return Single.just(noteIds.size)
     }
 
     private fun createNewId(realm: Realm): Int {

@@ -45,4 +45,10 @@ class NotesAdapter(private val listener: INotesAdapter) : RecyclerView.Adapter<N
 
     }
 
+    interface INotesAdapter {
+
+        fun onNoteChosen(note: PresentableNote)
+
+    }
+
 }

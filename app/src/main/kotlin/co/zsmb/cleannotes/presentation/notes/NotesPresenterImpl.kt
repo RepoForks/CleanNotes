@@ -14,8 +14,8 @@ class NotesPresenterImpl @Inject constructor(
         private val mainScheduler: Scheduler)
     : BasePresenter<NotesView>(), NotesPresenter {
 
-    override fun openNote(note: PresentableNote) {
-        navigator.goto(NoteDetailsActivity::class, "id" to note.id)
+    override fun createNote() {
+        navigator.goto(NoteEditActivity::class)
     }
 
     override fun loadNotes() {
@@ -32,8 +32,8 @@ class NotesPresenterImpl @Inject constructor(
         view?.displayNotes(notes)
     }
 
-    override fun createNote() {
-        navigator.goto(NoteEditActivity::class)
+    override fun openNote(note: PresentableNote) {
+        navigator.goto(NoteDetailsActivity::class, "id" to note.id)
     }
 
 }

@@ -18,11 +18,11 @@ class NotesDomainModule {
             = NotesUseCasesImpl(getAllNotesUseCase, createTestNotesUseCase)
 
     @Provides @PerActivity
-    fun provideGetAllNotesUseCase(notesRepository: NotesRepository): GetAllNotesUseCase
+    fun provideGetAllNotesUseCase(notesRepository: NotesRepository)
             = GetAllNotesUseCase(notesRepository, Schedulers.io())
 
     @Provides @PerActivity
-    fun provideCreateTestNotesUseCase(notesRepository: NotesRepository): CreateTestNotesUseCase
+    fun provideCreateTestNotesUseCase(notesRepository: NotesRepository)
             = CreateTestNotesUseCase(notesRepository, Schedulers.io())
 
 }
