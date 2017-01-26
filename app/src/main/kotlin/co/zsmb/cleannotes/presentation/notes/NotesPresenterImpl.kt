@@ -22,7 +22,8 @@ class NotesPresenterImpl @Inject constructor(
         subscriptions += useCases.getAllNotesUseCase()
                 .execute(Unit)
                 .map {
-                    it.map { PresentableNote(it.id, it.title, it.content) }.reversed()
+                    it.sortedByDescending { it.timestamp }
+                            .map { PresentableNote(it.id, it.title, it.content) }
                 }
                 .observeOn(mainScheduler)
                 .subscribe { notes -> showNotes(notes) }

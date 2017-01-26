@@ -8,8 +8,8 @@ import javax.inject.Inject
 class NotesRepositoryImpl @Inject constructor(private val notesDataSourceDisk: NotesDataSource)
     : NotesRepository {
 
-    private val realmToDomain: (RealmNote) -> DomainNote = { DomainNote(it.id, it.title, it.content) }
-    private val domainToRealm: (DomainNote) -> RealmNote = { RealmNote(it.id, it.title, it.content) }
+    private val realmToDomain: (RealmNote) -> DomainNote = { DomainNote(it.id, it.title, it.content, it.timestamp) }
+    private val domainToRealm: (DomainNote) -> RealmNote = { RealmNote(it.id, it.title, it.content, it.timestamp) }
 
     override fun add(note: DomainNote) = notesDataSourceDisk.add(domainToRealm(note))
 

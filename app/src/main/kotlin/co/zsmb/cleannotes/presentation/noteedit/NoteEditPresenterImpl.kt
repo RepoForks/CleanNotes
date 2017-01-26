@@ -30,7 +30,8 @@ class NoteEditPresenterImpl @Inject constructor(
     }
 
     override fun saveNote(note: EditableNote) {
-        val domainNote = DomainNote(note.id, note.title, note.content)
+        val timestamp = System.currentTimeMillis()
+        val domainNote = DomainNote(note.id, note.title, note.content, timestamp)
 
         subscriptions += useCases.updateNoteUseCase().execute(domainNote)
                 .observeOn(mainScheduler)

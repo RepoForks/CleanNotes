@@ -1,7 +1,6 @@
 package co.zsmb.cleannotes.di.notes
 
 import co.zsmb.cleannotes.domain.NotesRepository
-import co.zsmb.cleannotes.domain.usecase.CreateTestNotesUseCase
 import co.zsmb.cleannotes.domain.usecase.GetAllNotesUseCase
 import co.zsmb.cleannotes.presentation.base.PerActivity
 import dagger.Module
@@ -12,17 +11,12 @@ import io.reactivex.schedulers.Schedulers
 class NotesDomainModule {
 
     @Provides @PerActivity
-    fun provideNotesUseCases(getAllNotesUseCase: GetAllNotesUseCase,
-                             createTestNotesUseCase: CreateTestNotesUseCase)
+    fun provideNotesUseCases(getAllNotesUseCase: GetAllNotesUseCase)
             : NotesUseCases
-            = NotesUseCasesImpl(getAllNotesUseCase, createTestNotesUseCase)
+            = NotesUseCasesImpl(getAllNotesUseCase)
 
     @Provides @PerActivity
     fun provideGetAllNotesUseCase(notesRepository: NotesRepository)
             = GetAllNotesUseCase(notesRepository, Schedulers.io())
-
-    @Provides @PerActivity
-    fun provideCreateTestNotesUseCase(notesRepository: NotesRepository)
-            = CreateTestNotesUseCase(notesRepository, Schedulers.io())
 
 }

@@ -6,5 +6,6 @@ import io.realm.annotations.PrimaryKey
 open class RealmNote(
         @PrimaryKey var id: Int = -1,
         var title: String = "",
-        var content: String = "")
+        var content: String = "",
+        var timestamp: Long = 0)
     : RealmObject()

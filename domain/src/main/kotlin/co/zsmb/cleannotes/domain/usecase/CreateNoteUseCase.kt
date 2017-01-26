@@ -13,7 +13,10 @@ class CreateNoteUseCase @Inject constructor(
     : UseCase<DomainNote, Unit>(scheduler) {
 
     override fun createObservable(params: Unit): Single<DomainNote> {
-        return notesRepository.add(DomainNote(0, "", ""))
+        val timestamp = System.currentTimeMillis()
+        val note = DomainNote(0, "", "", timestamp)
+
+        return notesRepository.add(note)
                 .map { notesRepository.get(it).blockingGet() }
     }
 

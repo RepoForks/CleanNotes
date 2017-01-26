@@ -59,6 +59,7 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
         noteId = note.id
         tvTitle.text = note.title
         tvContent.text = note.content
+        tvTimestamp.text = note.timestamp
     }
 
 }

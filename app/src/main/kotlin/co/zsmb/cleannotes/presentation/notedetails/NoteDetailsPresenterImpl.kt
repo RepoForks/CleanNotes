@@ -6,6 +6,7 @@ import co.zsmb.cleannotes.presentation.base.BasePresenter
 import co.zsmb.cleannotes.presentation.base.Navigator
 import co.zsmb.cleannotes.presentation.noteedit.NoteEditActivity
 import io.reactivex.Scheduler
+import java.util.*
 import javax.inject.Inject
 
 class NoteDetailsPresenterImpl @Inject constructor(
@@ -33,7 +34,18 @@ class NoteDetailsPresenterImpl @Inject constructor(
     override fun loadNote(id: Int) {
         subscriptions += useCases.getNoteUseCase().execute(id)
                 .map {
-                    DetailedNote(it.id, it.title, it.content)
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = it.timestamp
+
+                    val year = calendar[Calendar.YEAR]
+                    val month = calendar[Calendar.MONTH] + 1
+                    val day = calendar[Calendar.DAY_OF_MONTH]
+                    val hour = calendar[Calendar.HOUR_OF_DAY]
+                    val minute = calendar[Calendar.MINUTE]
+
+                    val timestamp = String.format("%d-%02d-%02d %02d:%02d", year, month, day, hour, minute)
+
+                    DetailedNote(it.id, it.title, it.content, timestamp)
                 }
                 .observeOn(mainScheduler)
                 .subscribe(
