@@ -1,16 +1,24 @@
 package co.zsmb.cleannotes.presentation.notedetails
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import co.zsmb.cleannotes.R
 import co.zsmb.cleannotes.di.application.NotesApplication
 import co.zsmb.cleannotes.di.notedetails.DaggerNoteDetailsActivityComponent
 import co.zsmb.cleannotes.di.notedetails.NoteDetailsActivityComponent
 import co.zsmb.cleannotes.presentation.base.BaseView
 import kotlinx.android.synthetic.main.activity_note_details.*
+import org.jetbrains.anko.textColor
 
 class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityComponent>(), NoteDetailsView {
+
+    companion object {
+        val COLOR_DEFAULT = Color.GRAY
+        val COLOR_FADED = Color.LTGRAY
+    }
 
     private var noteId: Int = 0
 
@@ -57,9 +65,21 @@ class NoteDetailsActivity : BaseView<NoteDetailsPresenter, NoteDetailsActivityCo
 
     override fun displayNote(note: DetailedNote) {
         noteId = note.id
-        tvTitle.text = note.title
-        tvContent.text = note.content
         tvTimestamp.text = note.timestamp
+
+        setTextOrPlaceholder(tvTitle, note.title, "Untitled")
+        setTextOrPlaceholder(tvContent, note.content, "No content")
+    }
+
+    private fun setTextOrPlaceholder(tv: TextView, text: String, placeholder: String) {
+        if (text.isEmpty()) {
+            tv.text = placeholder
+            tv.textColor = COLOR_FADED
+        }
+        else {
+            tv.text = text
+            tv.textColor = COLOR_DEFAULT
+        }
     }
 
 }

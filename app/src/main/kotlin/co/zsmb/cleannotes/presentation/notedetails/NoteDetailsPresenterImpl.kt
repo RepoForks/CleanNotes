@@ -54,6 +54,7 @@ class NoteDetailsPresenterImpl @Inject constructor(
                         },
                         { error ->
                             Log.e(TAG, "Could not load note")
+                            view?.close()
                         }
                 )
     }
