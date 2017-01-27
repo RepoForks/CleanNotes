@@ -2,7 +2,7 @@ package co.zsmb.cleannotes.data
 
 import io.reactivex.Single
 
-interface NotesDataSource {
+interface NoteDataSource {
 
     fun add(note: RealmNote): Single<Int>
 

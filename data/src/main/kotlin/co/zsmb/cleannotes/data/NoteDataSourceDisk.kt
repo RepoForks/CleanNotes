@@ -3,7 +3,7 @@ package co.zsmb.cleannotes.data
 import io.reactivex.Single
 import io.realm.Realm
 
-class NotesDataSourceDisk : NotesDataSource {
+class NoteDataSourceDisk : NoteDataSource {
 
     override fun add(note: RealmNote): Single<Int> {
         withRealmTransaction {

@@ -1,41 +1,41 @@
 package co.zsmb.cleannotes.data
 
+import co.zsmb.cleannotes.data.DomainNoteMapper.toDomainNote
+import co.zsmb.cleannotes.data.DomainNoteMapper.toDomainNotes
+import co.zsmb.cleannotes.data.DomainNoteMapper.toRealmNote
+import co.zsmb.cleannotes.data.DomainNoteMapper.toRealmNotes
 import co.zsmb.cleannotes.domain.DomainNote
 import co.zsmb.cleannotes.domain.NoteRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class NoteRepositoryImpl @Inject constructor(private val notesDataSourceDisk: NotesDataSource)
+class NoteRepositoryImpl @Inject constructor(private val noteDataSourceDisk: NoteDataSource)
     : NoteRepository {
 
-    // TODO factor conversions to separate class that can then be tested
-    private val realmToDomain: (RealmNote) -> DomainNote = { DomainNote(it.id, it.title, it.content, it.timestamp) }
-    private val domainToRealm: (DomainNote) -> RealmNote = { RealmNote(it.id, it.title, it.content, it.timestamp) }
-
-    override fun add(note: DomainNote) = notesDataSourceDisk.add(domainToRealm(note))
+    override fun add(note: DomainNote) = noteDataSourceDisk.add(note.toRealmNote())
 
     override fun addAll(notes: List<DomainNote>): Single<List<Int>> {
-        val realmNotes = notes.map(domainToRealm)
-        return notesDataSourceDisk.addAll(realmNotes)
+        val realmNotes = notes.toRealmNotes()
+        return noteDataSourceDisk.addAll(realmNotes)
     }
 
-    override fun delete(noteId: Int): Single<Boolean> = notesDataSourceDisk.delete(noteId)
+    override fun delete(noteId: Int): Single<Boolean> = noteDataSourceDisk.delete(noteId)
 
-    override fun deleteAll(noteIds: List<Int>) = notesDataSourceDisk.deleteAll(noteIds)
+    override fun deleteAll(noteIds: List<Int>) = noteDataSourceDisk.deleteAll(noteIds)
 
     override fun getAll(): Single<List<DomainNote>>
-            = notesDataSourceDisk.getAll()
-            .map { it.map(realmToDomain) }
+            = noteDataSourceDisk.getAll()
+            .map { it.toDomainNotes() }
 
     override fun get(noteId: Int): Single<DomainNote>
-            = notesDataSourceDisk.get(noteId)
-            .map(realmToDomain)
+            = noteDataSourceDisk.get(noteId)
+            .map { it.toDomainNote() }
 
-    override fun update(note: DomainNote): Single<Boolean> = notesDataSourceDisk.update(domainToRealm(note))
+    override fun update(note: DomainNote): Single<Boolean> = noteDataSourceDisk.update(note.toRealmNote())
 
     override fun updateAll(notes: List<DomainNote>): Single<Int> {
-        val realmNotes = notes.map(domainToRealm)
-        return notesDataSourceDisk.updateAll(realmNotes)
+        val realmNotes = notes.toRealmNotes()
+        return noteDataSourceDisk.updateAll(realmNotes)
     }
 
 }
