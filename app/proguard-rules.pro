@@ -15,3 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn rx.internal.util.unsafe.**
+-dontwarn android.test.**
+-dontwarn org.junit.**
+-dontwarn org.jetbrains.anko.internals.AnkoInternals
